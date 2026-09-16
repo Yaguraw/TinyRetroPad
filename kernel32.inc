@@ -1,6 +1,15 @@
 ExitProcess PROTO :DWORD
 GetModuleHandleA PROTO :DWORD
 
+OFN_FILEMUSTEXIST EQU 00001000h
+OFN_PATHMUSTEXIST EQU 00000800h
+PD_RETURNDC EQU 00000100h
+FR_MATCHCASE EQU 00000004h
+FR_DOWN EQU 00000001h
+FR_DIALOGTERM EQU 00000040h
+FR_REPLACE EQU 00000010h
+FR_REPLACEALL EQU 00000020h
+
 OPENFILENAMEA STRUCT
   lStructSize DWORD ?
   hwndOwner HWND ?
@@ -29,7 +38,7 @@ CHOOSEFONTW STRUCT
   hwndOwner HWND ?
   hDC DWORD ?
   lpLogFont DWORD ?
-  iPointSize LONG ?
+  iPointSize SDWORD ?
   Flags DWORD ?
   rgbColors DWORD ?
   lCustData DWORD ?
@@ -39,8 +48,8 @@ CHOOSEFONTW STRUCT
   lpszStyle DWORD ?
   nFontType WORD ?
   ___MISSING_ALIGNMENT___ WORD ?
-  nSizeMin LONG ?
-  nSizeMax LONG ?
+  nSizeMin SDWORD ?
+  nSizeMax SDWORD ?
 CHOOSEFONTW ENDS
 
 FINDTEXTEXA STRUCT
@@ -50,8 +59,8 @@ FINDTEXTEXA STRUCT
 FINDTEXTEXA ENDS
 
 CHARRANGE STRUCT
-  cpMin LONG ?
-  cpMax LONG ?
+  cpMin SDWORD ?
+  cpMax SDWORD ?
 CHARRANGE ENDS
 
 PRINTDLGA STRUCT
@@ -77,7 +86,7 @@ PRINTDLGA STRUCT
 PRINTDLGA ENDS
 
 DOCINFOA STRUCT
-  cbSize LONG ?
+  cbSize SDWORD ?
   lpszDocName DWORD ?
   lpszOutput DWORD ?
   lpszDatatype DWORD ?
@@ -108,3 +117,17 @@ PAGESETUPDLGA STRUCT
   lpPageSetupTemplateName DWORD ?
   hPageSetupTemplate DWORD ?
 PAGESETUPDLGA ENDS
+
+FINDREPLACEA STRUCT
+  lStructSize DWORD ?
+  hwndOwner HWND ?
+  hInstance HINSTANCE ?
+  Flags DWORD ?
+  lpstrFindWhat DWORD ?
+  lpstrReplaceWith DWORD ?
+  wFindWhatLen WORD ?
+  wReplaceWithLen WORD ?
+  lCustData DWORD ?
+  lpfnHook DWORD ?
+  lpTemplateName DWORD ?
+FINDREPLACEA ENDS
