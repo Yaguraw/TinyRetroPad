@@ -18,8 +18,8 @@ jobs:
           ml.exe /nologo /c /coff /Cp /I. trpad.asm
           link.exe /nologo /SUBSYSTEM:WINDOWS /ENTRY:start /OUT:TinyRetroPad.exe trpad.obj kernel32.lib user32.lib shell32.lib comdlg32.lib gdi32.lib comctl32.lib Ole32.lib
           
-      - name: Upload Executable
+      - name: Upload Executable Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TinyRetroPad-DarkMode
+          name: TinyRetroPad-DarkMode-Compiled
           path: TinyRetroPad.exe
