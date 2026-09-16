@@ -146,7 +146,7 @@ MSG STRUCT
   lParam LPARAM ?
   time DWORD ?
   pt POINT <>
-WNDCLASS ENDS ; Nota: Corretto allineamento per MASM32
+MSG ENDS
 
 PAINTSTRUCT STRUCT
   hdc DWORD ?
