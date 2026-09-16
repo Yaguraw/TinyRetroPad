@@ -12,8 +12,8 @@ CHARFORMATW STRUCT
   cbSize UINT ?
   dwMask DWORD ?
   dwEffects DWORD ?
-  yHeight LONG ?
-  yOffset LONG ?
+  yHeight SDWORD ?
+  yOffset SDWORD ?
   crTextColor DWORD ?
   bCharSet BYTE ?
   bPitchAndFamily BYTE ?
