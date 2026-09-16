@@ -1,4 +1,4 @@
-name: Build TinyRetroPad
+name: Build TinyRetroPad Standard
 on: [push, workflow_dispatch]
 
 jobs:
@@ -13,13 +13,13 @@ jobs:
         with:
           arch: x86
 
-      - name: Download Crinkler
-        run: |
-          Invoke-WebRequest -Uri "https://github.com" -OutFile "crinkler.zip"
-          Expand-Archive -Path "crinkler.zip" -DestinationPath "."
-          Move-Item -Path "win32/crinkler.exe" -Destination "."
-
-      - name: Run Build
+      - name: Run Build with Microsoft Linker
         run: |
           ml.exe /nologo /c /coff /Cp trpad.asm
-          .\crinkler.exe /SUBSYSTEM:WINDOWS /ENTRY:start /OUT:TinyRetroPad.exe /NOINITIALIZERS /TINYIMPORT /HASHTRIES:1000 /ORDERTRIES:1000 trpad.obj kernel32.lib user32.lib shell32.lib comdlg32.lib gdi32.lib
+          link.exe /nologo /SUBSYSTEM:WINDOWS /ENTRY:start /OUT:TinyRetroPad.exe trpad.obj kernel32.lib user32.lib shell32.lib comdlg32.lib gdi32.lib comctl32.lib
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: TinyRetroPad-DarkMode
+          path: TinyRetroPad.exe
