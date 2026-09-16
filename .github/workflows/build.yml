@@ -1,25 +1,32 @@
-name: Build TinyRetroPad Modern
+name: Build TinyRetroPad Linux CrossCompile
 on: [push, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x86
-
-      - name: Run Build with Microsoft Linker
+      - name: Install Tools and UASM
         run: |
-          ml.exe /nologo /c /coff /Cu /I. trpad.asm
-          link.exe /nologo /SUBSYSTEM:WINDOWS /ENTRY:start /OUT:TinyRetroPad.exe trpad.obj kernel32.lib user32.lib shell32.lib comdlg32.lib gdi32.lib comctl32.lib Ole32.lib
-          
-      - name: Upload Executable Artifact
+          sudo apt-get update
+          sudo apt-get install -y lld wget unzip
+          # Scarica il compilatore UASM per Linux
+          wget https://github.com
+          unzip uasm256_linux64.zip
+          chmod +x uasm
+
+      - name: Run Build
+        run: |
+          # UASM compila il file ignorando il case-sensitive e senza bisogno di windows.inc esterni
+          ./uasm -coff -win32 -zcm trpad.asm
+          # Effettua il linking per Windows usando il linker LLVM di Linux
+          lld-link /subsystem:windows /entry:start /out:TinyRetroPad-DarkMode.exe trpad.obj
+
+      - name: Upload Executable
         uses: actions/upload-artifact@v4
         with:
-          name: TinyRetroPad-DarkMode-Compiled
-          path: TinyRetroPad.exe
+          name: TinyRetroPad-DarkMode-Windows
+          path: TinyRetroPad-DarkMode.exe
+
