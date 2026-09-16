@@ -1,0 +1,29 @@
+name: Build TinyRetroPad
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild (MASM)
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Download Crinkler
+        run: |
+          Invoke-WebRequest -Uri "https://github.com" -OutFile "crinkler.zip"
+          Expand-Archive -Path "crinkler.zip" -DestinationPath "."
+          Move-Item -Path "win32/crinkler.exe" -Destination "."
+
+      - name: Run Build
+        run: |
+          & "ml.exe" /c /coff /Cp trpad.asm
+          & ".\crinkler.exe" /SUBSYSTEM:WINDOWS /ENTRY:start /OUT:TinyRetroPad.exe trpad.obj user32.lib kernel32.lib gdi32.lib shell32.lib comctl32.lib
+
+      - name: Upload Executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: TinyRetroPad-DarkMode
+          path: TinyRetroPad.exe
