@@ -1,0 +1,21 @@
+RegisterClassExA PROTO :DWORD
+CreateWindowExA PROTO :DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD,:DWORD
+ShowWindow PROTO :DWORD,:DWORD
+UpdateWindow PROTO :DWORD
+GetMessageA PROTO :DWORD,:DWORD,:DWORD,:DWORD
+TranslateMessage PROTO :DWORD
+DispatchMessageA PROTO :DWORD
+PostQuitMessage PROTO :DWORD
+DefWindowProcA PROTO :DWORD,:DWORD,:DWORD,:DWORD
+
+CHARFORMATW STRUCT
+  cbSize UINT ?
+  dwMask DWORD ?
+  dwEffects DWORD ?
+  yHeight LONG ?
+  yOffset LONG ?
+  crTextColor DWORD ?
+  bCharSet BYTE ?
+  bPitchAndFamily BYTE ?
+  szFaceName WORD LF_FACESIZE DUP (?)
+CHARFORMATW ENDS
