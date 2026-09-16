@@ -45,8 +45,8 @@ option casemap:none        ; Preserve the case of system identifiers but not our
 ; it out entirely.  With every switch 0 the output is byte-
 ; for-byte the original baseline build (2686 bytes); a feature
 ; only costs space when it is switched on.
-FEAT_LINENUMBERS = 0       ; View > Line Numbers gutter (default OFF)
-FEAT_DARKMODE    = 0       ; View > Dark Mode (default OFF)
+FEAT_LINENUMBERS = 1       ; View > Line Numbers gutter (default OFF)
+FEAT_DARKMODE    = 1       ; View > Dark Mode (default OFF)
 ; ==========================================================
 
 ; Include files - headers and libs that we need for
