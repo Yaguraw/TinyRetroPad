@@ -1,0 +1,92 @@
+NULL EQU 0
+TRUE EQU 1
+FALSE EQU 0
+WM_DESTROY EQU 0002h
+WM_CREATE EQU 0001h
+WM_USER EQU 0400h
+MB_YESNOCANCEL EQU 00000003h
+IDCANCEL EQU 2
+IDNO EQU 7
+DATE_SHORTDATE EQU 00000001h
+LOCALE_USER_DEFAULT EQU 0400h
+EM_REPLACESEL EQU 00C2h
+LF_FACESIZE EQU 32
+CFE_BOLD EQU 00000001h
+CFE_ITALIC EQU 00000002h
+
+RECT STRUCT
+  left LONG ?
+  top LONG ?
+  right LONG ?
+  bottom LONG ?
+RECT ENDS
+
+POINT STRUCT
+  x LONG ?
+  y LONG ?
+POINT ENDS
+
+HINSTANCE TYPEDEF DWORD
+HWND TYPEDEF DWORD
+UINT TYPEDEF DWORD
+WPARAM TYPEDEF DWORD
+LPARAM TYPEDEF DWORD
+
+WNDCLASS STRUCT
+  style UINT ?
+  lpfnWndProc DWORD ?
+  cbClsExtra DWORD ?
+  cbWndExtra DWORD ?
+  hInstance HINSTANCE ?
+  hIcon DWORD ?
+  hCursor DWORD ?
+  hbrBackground DWORD ?
+  lpszMenuName DWORD ?
+  lpszClassName DWORD ?
+WNDCLASS ENDS
+
+MSG STRUCT
+  hwnd HWND ?
+  message UINT ?
+  wParam WPARAM ?
+  lParam LPARAM ?
+  time DWORD ?
+  pt POINT <>
+MSG ENDS
+
+PAINTSTRUCT STRUCT
+  hdc DWORD ?
+  fErase DWORD ?
+  rcPaint RECT <>
+  fRestore DWORD ?
+  fIncUpdate DWORD ?
+  rgbReserved BYTE 32 DUP (?)
+PAINTSTRUCT ENDS
+
+SYSTEMTIME STRUCT
+  wYear WORD ?
+  wMonth WORD ?
+  wDayOfWeek WORD ?
+  wDay WORD ?
+  wHour WORD ?
+  wMinute WORD ?
+  wSecond WORD ?
+  wMilliseconds WORD ?
+SYSTEMTIME ENDS
+
+LOGFONTW STRUCT
+  lfHeight LONG ?
+  lfWidth LONG ?
+  lfEscapement LONG ?
+  lfOrientation LONG ?
+  lfWeight LONG ?
+  lfItalic BYTE ?
+  lfUnderline BYTE ?
+  lfStrikeOut BYTE ?
+  lfCharSet BYTE ?
+  lfOutPrecision BYTE ?
+  lfClipPrecision BYTE ?
+  lfQuality BYTE ?
+  lfPitchAndFamily BYTE ?
+  lfFaceName WORD LF_FACESIZE DUP (?)
+LOGFONTW ENDS
