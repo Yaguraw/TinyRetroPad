@@ -16,7 +16,7 @@ jobs:
       - name: Download MASM32 Includes
         run: |
           New-Item -ItemType Directory -Force -Path "C:\masm32\include"
-          # Scarica i file .inc necessari direttamente da una repository affidabile di MASM32
+          # URL corretti per il download dei file .inc storici di MASM32
           Invoke-WebRequest -Uri "https://githubusercontent.com" -OutFile "C:\masm32\include\windows.inc"
           Invoke-WebRequest -Uri "https://githubusercontent.com" -OutFile "C:\masm32\include\user32.inc"
           Invoke-WebRequest -Uri "https://githubusercontent.com" -OutFile "C:\masm32\include\kernel32.inc"
@@ -24,7 +24,7 @@ jobs:
       - name: Run Build with Microsoft Linker
         run: |
           ml.exe /nologo /c /coff /Cp /IC:\masm32\include trpad.asm
-          link.exe /nologo /SUBSYSTEM:WINDOWS /ENTRY:MainEntry /OUT:TinyRetroPad.exe trpad.obj kernel32.lib user32.lib shell32.lib comdlg32.lib gdi32.lib comctl32.lib
+          link.exe /nologo /SUBSYSTEM:WINDOWS /ENTRY:start /OUT:TinyRetroPad.exe trpad.obj kernel32.lib user32.lib shell32.lib comdlg32.lib gdi32.lib comctl32.lib
 
       - name: Upload Executable
         uses: actions/upload-artifact@v4
