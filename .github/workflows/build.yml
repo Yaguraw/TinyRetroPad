@@ -1,4 +1,5 @@
 name: Build TinyRetroPad Official
+
 on: [push, workflow_dispatch]
 
 jobs:
