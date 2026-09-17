@@ -1,43 +1,4 @@
-; --------------------------------------------------------- 
-;  _____      _             _____          _ 
-; |  __ \    | |           |  __ \        | |
-; | |__) |___| |_ _ __ ___ | |__) |_ _  __| |
-; |  _  // _ \ __| '__/ _ \|  ___/ _` |/ _` |
-; | | \ \  __/ |_| | | (_) | |  | (_| | (_| |
-; |_|  \_\___|\__|_|  \___/|_|   \__,_|\__,_|
-; T I N Y  X 86   D E S K T O P   E D I T O R                                            
-; --------------------------------------------------------- 
-; (c) 2026 Plummer's Software, Ltd.
-; Based on Dave's Tiny Editor 2.0.9 
-;  which was
-; Based on Dave Plummer's Tiny App
-; ---------------------------------------------------------
-; Dave's Tiny Editor (DTE)
-; Copyright (c) 2026 Matthew M. Power
-; Licensed under the Apache License, Version 2.0.
-; See LICENSE and NOTICE files in this repository.
-; ---------------------------------------------------------
-;
-; Growth History:
-; Added FILE Menus - 1375 Bytes
-; Added EDIT Menus - 1428 Bytes
-; Expanded FILE Menus (Open/Save As) - 1517 Bytes
-; Added HELP Menus - 1557 Bytes
-; Added FILE Save Prompt Flow - 1622 Bytes
-; Added EDIT Time/Date - 1668 Bytes
-; Added FORMAT Word Wrap - 1694 Bytes
-; Added Right-Click Context Menu - 1779 Bytes
-; Added FORMAT Font Dialog - 1910 Bytes
-; Added EDIT Find/FindNext/Replace - 2143 Bytes
-; Added FILE Print - 2476 Bytes
-; Added VIEW Status Bar (Ln/Col) - 2476 Bytes
-; Added DIALOG based Feature - 2686 Bytes
-; Added KEYBOARD accelerators - 2794 Bytes
-; Compiler directives and includes:
- 
-.386                       ; Full 80386 instruction set and mode
-.model flat, stdcall       ; All 32-bit and later apps are flat. Used to include "tiny, etc"
-option casemap:none        ; Preserve the case of system identifiers but not our own, more or less
+
 
 ; =====================  FEATURE MENU  =====================
 ; Optional features are gated behind assembly-time switches.
@@ -45,8 +6,11 @@ option casemap:none        ; Preserve the case of system identifiers but not our
 ; it out entirely.  With every switch 0 the output is byte-
 ; for-byte the original baseline build (2686 bytes); a feature
 ; only costs space when it is switched on.
-FEAT_LINENUMBERS = 1       ; View > Line Numbers gutter (default OFF)
-FEAT_DARKMODE    = 1       ; View > Dark Mode (default OFF)
+FEAT_LINENUMBERS = 1
+FEAT_DARKMODE = 1
+FEAT_LINENUMBERS EQU 1
+FEAT_DARKMODE EQU 1
+EAT_DARKMODE EQU 1
 ; ==========================================================
 
 ; Include files - headers and libs that we need for
