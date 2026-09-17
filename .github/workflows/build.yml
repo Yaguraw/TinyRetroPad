@@ -1,4 +1,4 @@
-name: Build TinyRetroPad Linux CrossCompile
+name: Build TinyRetroPad Linux Native
 on: [push, workflow_dispatch]
 
 jobs:
@@ -8,20 +8,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Tools and UASM
+      - name: Install Linker
         run: |
           sudo apt-get update
-          sudo apt-get install -y lld wget unzip
-          # Download diretto dell'eseguibile stabile di UASM senza redirezioni corrotte
-          wget -q "https://github.com" -O uasm.zip
-          unzip uasm.zip
-          chmod +x uasm
+          sudo apt-get install -y lld
 
-      - name: Run Build
+      - name: Run Build with Native Assembler
         run: |
-          # Compilazione pulita ignorando maiuscole/minuscole e definizioni di Windows
-          ./uasm -coff -win32 -zcm trpad.asm
-          # Linker ufficiale di LLVM per Windows
+          # Aggiungiamo al volo la direttiva Intel in cima al file per farlo digerire a Linux
+          echo ".intel_syntax noprefix" > temp.asm
+          cat trpad.asm >> temp.asm
+          
+          # Compiliamo usando il tool nativo preinstallato (Target Windows 32-bit)
+          i686-w64-mingw32-as -o trpad.obj temp.asm
+          
+          # Creiamo l'eseguibile finale per Windows
           lld-link /subsystem:windows /entry:start /out:TinyRetroPad-DarkMode.exe trpad.obj
 
       - name: Upload Executable
