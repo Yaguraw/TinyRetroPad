@@ -1,33 +1,20 @@
-name: Build TinyRetroPad Linux Native
+name: Build TinyRetroPad Official
 on: [push, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install MinGW Chain and Linker
+      - name: Run Author Build Script
         run: |
-          sudo apt-get update
-          # Installiamo esplicitamente l'intera suite MinGW per abilitare l'assembler cross-platform
-          sudo apt-get install -y mingw-w64 lld
+          # Esegue il file batch originale dell'autore sfruttando l'ambiente Windows ufficiale di GitHub
+          .\build.bat
 
-      - name: Run Build with Native Assembler
-        run: |
-          # Aggiungiamo la direttiva Intel in cima al file per far comprendere la sintassi MASM a Linux
-          echo ".intel_syntax noprefix" > temp.asm
-          cat trpad.asm >> temp.asm
-          
-          # Compiliamo usando il cross-assembler ufficiale per Windows 32-bit
-          i686-w64-mingw32-as -o trpad.obj temp.asm
-          
-          # Colleghiamo l'oggetto generando l'eseguibile Windows .exe finale
-          lld-link /subsystem:windows /entry:start /out:TinyRetroPad-DarkMode.exe trpad.obj
-
-      - name: Upload Executable
+      - name: Upload Finished Executable
         uses: actions/upload-artifact@v4
         with:
-          name: TinyRetroPad-DarkMode-Windows
-          path: TinyRetroPad-DarkMode.exe
+          name: TinyRetroPad-FullOptions
+          path: trpad.exe
