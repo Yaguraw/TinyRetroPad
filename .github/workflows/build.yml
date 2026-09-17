@@ -12,16 +12,16 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y lld wget unzip
-          # Scarica il compilatore UASM per Linux
-          wget https://github.com
-          unzip uasm256_linux64.zip
+          # Download diretto dell'eseguibile stabile di UASM senza redirezioni corrotte
+          wget -q "https://github.com" -O uasm.zip
+          unzip uasm.zip
           chmod +x uasm
 
       - name: Run Build
         run: |
-          # UASM compila il file ignorando il case-sensitive e senza bisogno di windows.inc esterni
+          # Compilazione pulita ignorando maiuscole/minuscole e definizioni di Windows
           ./uasm -coff -win32 -zcm trpad.asm
-          # Effettua il linking per Windows usando il linker LLVM di Linux
+          # Linker ufficiale di LLVM per Windows
           lld-link /subsystem:windows /entry:start /out:TinyRetroPad-DarkMode.exe trpad.obj
 
       - name: Upload Executable
@@ -29,4 +29,3 @@ jobs:
         with:
           name: TinyRetroPad-DarkMode-Windows
           path: TinyRetroPad-DarkMode.exe
-
