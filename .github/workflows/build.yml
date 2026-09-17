@@ -8,21 +8,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Linker
+      - name: Install MinGW Chain and Linker
         run: |
           sudo apt-get update
-          sudo apt-get install -y lld
+          # Installiamo esplicitamente l'intera suite MinGW per abilitare l'assembler cross-platform
+          sudo apt-get install -y mingw-w64 lld
 
       - name: Run Build with Native Assembler
         run: |
-          # Aggiungiamo al volo la direttiva Intel in cima al file per farlo digerire a Linux
+          # Aggiungiamo la direttiva Intel in cima al file per far comprendere la sintassi MASM a Linux
           echo ".intel_syntax noprefix" > temp.asm
           cat trpad.asm >> temp.asm
           
-          # Compiliamo usando il tool nativo preinstallato (Target Windows 32-bit)
+          # Compiliamo usando il cross-assembler ufficiale per Windows 32-bit
           i686-w64-mingw32-as -o trpad.obj temp.asm
           
-          # Creiamo l'eseguibile finale per Windows
+          # Colleghiamo l'oggetto generando l'eseguibile Windows .exe finale
           lld-link /subsystem:windows /entry:start /out:TinyRetroPad-DarkMode.exe trpad.obj
 
       - name: Upload Executable
